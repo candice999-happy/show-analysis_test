@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>朱家泓技術分析課程｜課前問卷分析報告</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1410;
+    --paper: #faf8f4;
+    --accent: #c8872a;
+    --accent-light: #f0d9b5;
+    --accent-dark: #8b5e1a;
+    --red: #c0392b;
+    --green: #27ae60;
+    --blue: #2c6fad;
+    --muted: #6b5e52;
+    --divider: #ddd5c8;
+    --card-bg: #ffffff;
+    --shadow: 0 2px 12px rgba(26,20,16,0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans TC', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.7;
+    font-size: 15px;
+  }
+
+  /* HEADER */
+  .report-header {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 64px 48px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .report-header::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 320px; height: 100%;
+    background: linear-gradient(135deg, transparent 40%, rgba(200,135,42,0.15));
+    pointer-events: none;
+  }
+  .report-header .kicker {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 11px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .report-header .kicker::after {
+    content: '';
+    width: 40px;
+    height: 1px;
+    background: var(--accent);
+  }
+  .report-header h1 {
+    font-family: 'Noto Serif TC', serif;
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 12px;
+  }
+  .report-header .subtitle {
+    color: rgba(250,248,244,0.6);
+    font-size: 14px;
+    font-weight: 300;
+    margin-bottom: 40px;
+  }
+  .header-stats {
+    display: flex;
+    gap: 48px;
+    flex-wrap: wrap;
+  }
+  .header-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .header-stat .num {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .header-stat .label {
+    font-size: 12px;
+    color: rgba(250,248,244,0.55);
+    letter-spacing: 0.05em;
+  }
+
+  /* LAYOUT */
+  .container {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .section {
+    padding: 56px 0;
+    border-bottom: 1px solid var(--divider);
+  }
+  .section:last-child { border-bottom: none; }
+
+  .section-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-title .num-badge {
+    background: var(--accent);
+    color: white;
+    font-size: 11px;
+    font-family: 'Noto Sans TC', sans-serif;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 2px;
+    letter-spacing: 0.08em;
+  }
+  .section-desc {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 32px;
+    font-weight: 300;
+  }
+
+  /* GRID */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; }
+  @media (max-width: 768px) {
+    .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+    .report-header { padding: 40px 24px 32px; }
+    .header-stats { gap: 24px; }
+  }
+
+  /* CARDS */
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--divider);
+    border-radius: 6px;
+    padding: 28px;
+    box-shadow: var(--shadow);
+  }
+  .card-title {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--divider);
+  }
+
+  /* METRIC CARDS */
+  .metric-card {
+    background: var(--card-bg);
+    border: 1px solid var(--divider);
+    border-radius: 6px;
+    padding: 24px 20px;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .metric-card .metric-val {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 38px;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .metric-card .metric-label {
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 300;
+  }
+  .metric-card.highlight {
+    background: var(--ink);
+    border-color: var(--ink);
+  }
+  .metric-card.highlight .metric-val { color: var(--accent); }
+  .metric-card.highlight .metric-label { color: rgba(250,248,244,0.6); }
+  .metric-card .metric-sub {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  /* BAR CHARTS */
+  .bar-list { display: flex; flex-direction: column; gap: 12px; }
+  .bar-item { display: flex; flex-direction: column; gap: 5px; }
+  .bar-label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .bar-label {
+    font-size: 13px;
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .bar-count {
+    font-size: 12px;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+  .bar-track {
+    background: var(--accent-light);
+    border-radius: 2px;
+    height: 8px;
+    overflow: hidden;
+  }
+  .bar-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 2px;
+    transition: width 0.6s cubic-bezier(.4,0,.2,1);
+  }
+  .bar-fill.blue { background: var(--blue); }
+  .bar-fill.green { background: var(--green); }
+  .bar-fill.red { background: var(--red); }
+
+  /* INTENT SCORE VISUAL */
+  .intent-breakdown {
+    display: flex;
+    gap: 3px;
+    height: 48px;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+  .intent-seg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: white;
+    min-width: 20px;
+    transition: all 0.4s;
+  }
+  .intent-seg.s5 { background: #27ae60; }
+  .intent-seg.s4 { background: #6abf69; }
+  .intent-seg.s3 { background: #f0a500; }
+  .intent-seg.s2 { background: #e67e22; }
+  .intent-seg.s1 { background: #c0392b; }
+
+  .intent-legend {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .intent-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .legend-dot {
+    width: 10px; height: 10px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  /* PAIN POINTS TABLE */
+  .ranked-table { width: 100%; border-collapse: collapse; }
+  .ranked-table th {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border-bottom: 2px solid var(--divider);
+    padding: 8px 12px;
+    text-align: left;
+  }
+  .ranked-table td {
+    padding: 12px 12px;
+    font-size: 14px;
+    border-bottom: 1px solid var(--divider);
+  }
+  .ranked-table tr:last-child td { border-bottom: none; }
+  .ranked-table .rank-num {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--accent-light);
+    width: 40px;
+  }
+  .ranked-table tr:nth-child(-n+3) .rank-num { color: var(--accent); }
+  .ranked-table .pct-badge {
+    display: inline-block;
+    background: var(--accent-light);
+    color: var(--accent-dark);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+
+  /* PRICE ANALYSIS */
+  .price-range-visual {
+    position: relative;
+    padding: 32px 0 16px;
+  }
+  .price-axis {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 8px;
+  }
+  .price-marker {
+    position: relative;
+    height: 8px;
+    background: linear-gradient(to right, var(--green), var(--accent), #e67e22, var(--red));
+    border-radius: 4px;
+    margin: 0;
+  }
+  .price-pin {
+    position: absolute;
+    top: -28px;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+  .price-pin-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--muted);
+    white-space: nowrap;
+    background: var(--paper);
+    padding: 1px 4px;
+    border-radius: 2px;
+  }
+  .price-pin-dot {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    border: 2px solid white;
+    box-shadow: 0 0 0 1px var(--divider);
+  }
+  .price-pin-dot.sweet { background: var(--accent); }
+  .price-pin-dot.floor { background: var(--green); }
+  .price-pin-dot.ceiling { background: var(--red); }
+
+  /* INSIGHT CALLOUTS */
+  .insight-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 16px; }
+  .insight-card {
+    background: var(--card-bg);
+    border: 1px solid var(--divider);
+    border-left: 4px solid var(--accent);
+    border-radius: 4px;
+    padding: 20px 20px 20px 24px;
+    box-shadow: var(--shadow);
+  }
+  .insight-card.action {
+    border-left-color: var(--blue);
+  }
+  .insight-card.warning {
+    border-left-color: var(--red);
+  }
+  .insight-card .insight-icon {
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+  .insight-card .insight-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: var(--ink);
+  }
+  .insight-card .insight-body {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  /* RECOMMENDATION CARDS */
+  .rec-card {
+    background: var(--card-bg);
+    border: 1px solid var(--divider);
+    border-radius: 6px;
+    padding: 24px;
+    box-shadow: var(--shadow);
+    display: flex;
+    gap: 20px;
+  }
+  .rec-num {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 42px;
+    font-weight: 700;
+    color: var(--accent-light);
+    line-height: 1;
+    flex-shrink: 0;
+    width: 50px;
+  }
+  .rec-content {}
+  .rec-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .rec-body {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+  .rec-tag {
+    display: inline-block;
+    background: var(--accent-light);
+    color: var(--accent-dark);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border-radius: 2px;
+    margin-bottom: 8px;
+  }
+
+  /* FOOTER */
+  .report-footer {
+    background: var(--ink);
+    color: rgba(250,248,244,0.4);
+    padding: 32px 48px;
+    font-size: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .report-footer strong { color: rgba(250,248,244,0.7); }
+
+  /* HORIZONTAL RULE */
+  hr { border: none; border-top: 1px solid var(--divider); }
+
+  /* BADGE */
+  .badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 2px;
+    letter-spacing: 0.06em;
+  }
+  .badge-green { background: #d4f0e0; color: #1a7a42; }
+  .badge-amber { background: #fcefd3; color: #9e6c00; }
+  .badge-red { background: #fde0de; color: #a82020; }
+  .badge-blue { background: #d6e8f8; color: #1d4d7e; }
+
+  /* PROFILE PIE */
+  .donut-wrap { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
+  .donut-legend { display: flex; flex-direction: column; gap: 8px; }
+  .donut-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12.5px;
+  }
+  .donut-legend-swatch {
+    width: 12px; height: 12px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  /* QUOTE BLOCK */
+  .quote-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px,1fr));
+    gap: 16px;
+    margin-top: 24px;
+  }
+  .quote-card {
+    background: var(--card-bg);
+    border: 1px solid var(--divider);
+    border-radius: 4px;
+    padding: 20px;
+    font-size: 13px;
+    color: var(--ink);
+    line-height: 1.65;
+    position: relative;
+  }
+  .quote-card::before {
+    content: '\201C';
+    font-family: 'Noto Serif TC', serif;
+    font-size: 48px;
+    color: var(--accent-light);
+    position: absolute;
+    top: 8px;
+    left: 14px;
+    line-height: 1;
+  }
+  .quote-card p {
+    padding-top: 20px;
+    color: var(--muted);
+    font-style: italic;
+  }
+  .quote-card .quote-attr {
+    margin-top: 8px;
+    font-size: 11px;
+    color: var(--accent-dark);
+    font-style: normal;
+    font-weight: 700;
+  }
+
+  .summary-box {
+    background: linear-gradient(135deg, var(--ink) 0%, #2d2520 100%);
+    border-radius: 8px;
+    padding: 36px 40px;
+    color: var(--paper);
+    margin-bottom: 40px;
+  }
+  .summary-box h3 {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 20px;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .summary-box p {
+    font-size: 14px;
+    line-height: 1.8;
+    color: rgba(250,248,244,0.75);
+  }
+
+  @keyframes fadeInUp {
+    from { opacity:0; transform:translateY(16px); }
+    to { opacity:1; transform:translateY(0); }
+  }
+  .section { animation: fadeInUp 0.4s ease both; }
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="report-header">
+  <div class="kicker">ShiFu 課程分析報告</div>
+  <h1>朱家泓技術分析課程<br>課前問卷分析報告</h1>
+  <p class="subtitle">資料來源：課前問卷全量數據　|　分析完成：2026/03/06</p>
+  <div class="header-stats">
+    <div class="header-stat"><span class="num">303</span><span class="label">有效問卷數</span></div>
+    <div class="header-stat"><span class="num">4.1</span><span class="label">平均購買意願（滿分5）</span></div>
+    <div class="header-stat"><span class="num">75%</span><span class="label">高購買意願（4–5分）</span></div>
+    <div class="header-stat"><span class="num">NT$3,000</span><span class="label">市場心理底價</span></div>
+  </div>
+</header>
+
+<div class="container">
+
+<!-- ===== SECTION 1: PURCHASE INTENT ===== -->
+<section class="section">
+  <div class="section-title">
+    <span class="num-badge">01</span>
+    購買意願分析
+  </div>
+  <p class="section-desc">問卷第5題：根據課程內容，您的購買意願？（1=極低 ～ 5=極高）</p>
+
+  <div class="grid-4" style="margin-bottom:32px;">
+    <div class="metric-card highlight">
+      <div class="metric-val">4.1</div>
+      <div class="metric-label">整體平均意願分數</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val" style="color:var(--green)">48%</div>
+      <div class="metric-label">滿分 5 分（極高意願）</div>
+      <div class="metric-sub">約 146 人</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val" style="color:var(--blue)">27%</div>
+      <div class="metric-label">4 分（高意願）</div>
+      <div class="metric-sub">約 82 人</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val" style="color:var(--red)">25%</div>
+      <div class="metric-label">3 分以下（猶豫/低意願）</div>
+      <div class="metric-sub">約 75 人</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">購買意願分布（5 → 1 由左至右）</div>
+    <div class="intent-breakdown" id="intentBar">
+      <div class="intent-seg s5" style="flex:146">5分 48%</div>
+      <div class="intent-seg s4" style="flex:82">4分 27%</div>
+      <div class="intent-seg s3" style="flex:51">3分 17%</div>
+      <div class="intent-seg s2" style="flex:17">2分 6%</div>
+      <div class="intent-seg s1" style="flex:7">1%</div>
+    </div>
+    <div class="intent-legend">
+      <div class="intent-legend-item"><div class="legend-dot" style="background:#27ae60"></div>5分 – 立即購買意願強</div>
+      <div class="intent-legend-item"><div class="legend-dot" style="background:#6abf69"></div>4分 – 有意購買、等確認</div>
+      <div class="intent-legend-item"><div class="legend-dot" style="background:#f0a500"></div>3分 – 猶豫中、需更多資訊</div>
+      <div class="intent-legend-item"><div class="legend-dot" style="background:#e67e22"></div>2分 – 觀望、有明確疑慮</div>
+      <div class="intent-legend-item"><div class="legend-dot" style="background:#c0392b"></div>1分 – 無購買意願</div>
+    </div>
+  </div>
+
+  <div style="margin-top:24px;" class="insight-grid">
+    <div class="insight-card">
+      <div class="insight-icon">✅</div>
+      <div class="insight-title">購買意願高度樂觀</div>
+      <div class="insight-body">逾七成五受訪者評分 4 分以上，代表課程方向與定位對目標受眾的吸引力已相當強烈，是有利的市場訊號。</div>
+    </div>
+    <div class="insight-card warning">
+      <div class="insight-icon">⚠️</div>
+      <div class="insight-title">25% 猶豫族群有轉換空間</div>
+      <div class="insight-body">3分以下（約75人）主要原因為「想知道更多資訊」、「不了解上課形式」、「不確認費用」，屬於可透過強化資訊轉換的潛在學員。</div>
+    </div>
+  </div>
+
+  <div style="margin-top:24px;" class="card">
+    <div class="card-title">低購買意願主要原因（3分以下受訪者）</div>
+    <div class="bar-list">
+      <div class="bar-item">
+        <div class="bar-label-row"><span class="bar-label">想知道更多資訊再決定</span><span class="bar-count">最多</span></div>
+        <div class="bar-track"><div class="bar-fill blue" style="width:58%"></div></div>
+      </div>
+      <div class="bar-item">
+        <div class="bar-label-row"><span class="bar-label">不了解上課形式</span><span class="bar-count">次多</span></div>
+        <div class="bar-track"><div class="bar-fill blue" style="width:32%"></div></div>
+      </div>
+      <div class="bar-item">
+        <div class="bar-label-row"><span class="bar-label">想確認費用再決定</span><span class="bar-count">第三</span></div>
+        <div class="bar-track"><div class="bar-fill blue" style="width:18%"></div></div>
+      </div>
+      <div class="bar-item">
+        <div class="bar-label-row"><span class="bar-label">課程內容不吸引／太難／太簡單</span><span class="bar-count">少數</span></div>
+        <div class="bar-track"><div class="bar-fill red" style="width:10%"></div></div>
+      </div>
+      <div class="bar-item">
+        <div class="bar-label-row"><span class="bar-label">只是填問卷支持老師開課</span><span class="bar-count">少數</span></div>
+        <div class="bar-track"><div class="bar-fill" style="width:7%"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SECTION 2: STUDENT PROFILE ===== -->
+<section class="section">
+  <div class="section-title">
+    <span class="num-badge">02</span>
+    學員樣貌分析
+  </div>
+  <p class="section-desc">投資經驗、年齡及性別結構分布</p>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">投資經驗分布</div>
+      <div class="bar-list">
+        <div class="bar-item">
+          <div class="bar-label-row"><span class="bar-label">有買個股，但沒有固定方法</span><span class="bar-count">~44%</span></div>
+          <div class="bar-track"><div class="bar-fill" style="width:100%"></div></div>
+        </div>
+        <div class="bar-item">
+          <div class="bar-label-row"><span class="bar-label">只有買 ETF／定期定額</span><span class="bar-count">~24%</span></div>
+          <div class="bar-track"><div class="bar-fill" style="width:55%"></div></div>
+        </div>
+        <div class="bar-item">
+          <div class="bar-label-row"><span class="bar-label">有學過技術分析，但還是不會用</span><span class="bar-count">~14%</span></div>
+          <div class="bar-track"><div class="bar-fill" style="width:32%"></div></div>
+        </div>
+        <div class="bar-item">
+          <div class="bar-label-row"><span class="bar-label">完全沒買過股票</span><span class="bar-count">~11%</span></div>
+          <div class="bar-track"><div class="bar-fill blue" style="width:25%"></div></div>
+        </div>
+        <div class="bar-item">
+          <div class="bar-label-row"><span class="bar-label">有自己固定操作方式</span><span class="bar-count">~7%</span></div>
+          <div class="bar-track"><div class="bar-fill green" style="width:16%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">年齡分布</div>
+      <div class="bar-list">
+        <div class="bar-item">
+          <div class="bar-label-row"><span class="bar-label">41–45 歲</span><span class="bar-count">~23%</span></div>
+          <div class="bar-track"><div class="bar-fill" style="width:100%"></div></div>
+        </div>
+        <div class="bar-item">
+          <div class="bar-label-row"><span class="bar-label">36–40 歲</span><span class="bar-count">~18%</span></div>
+          <div class="bar-track"><div class="bar-fill" style="width:78%"></div></div>
+        </div>
+        <div class="bar-item">
+          <div class="bar-label-row"><span class="bar-label">46–50 歲</span><span class="bar-count">~17%</span></div>
+          <div class="bar-track"><div class="bar-fill" style="width:74%"></div></div>
+        </div>
+        <div class="bar-item">
+          <div class="bar-label-row"><span class="bar-label">31–35 歲</span><span class="bar-count">~14%</span></div>
+          <div class="bar-track"><div class="bar-fill blue" style="width:61%"></div></div>
+        </div>
+        <div class="bar-item">
+          <div class="bar-label-row"><span class="bar-label">51–55 歲</span><span class="bar-count">~13%</span></div>
+          <div class="bar-track"><div class="bar-fill blue" style="width:57%"></div></div>
+        </div>
+        <div class="bar-item">
+          <div class="bar-label-row"><span class="bar-label">其他（55+, 21–30）</span><span class="bar-count">~15%</span></div>
+          <div class="bar-track"><div class="bar-fill" style="width:65%; background:var(--divider)"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:20px;" class="grid-2">
+    <div class="card">
+      <div class="card-title">性別分布</div>
+      <div class="bar-list">
+        <div class="bar-item">
+          <div class="bar-label-row"><span class="bar-label">女性</span><span class="bar-count">~56%</span></div>
+          <div class="bar-track"><div class="bar-fill" style="width:100%"></div></div>
+        </div>
+        <div class="bar-item">
+          <div class="bar-label-row"><span class="bar-label">男性</span><span class="bar-count">~41%</span></div>
+          <div class="bar-track"><div class="bar-fill blue" style="width:73%"></div></div>
+        </div>
+        <div class="bar-item">
+          <div class="bar-label-row"><span class="bar-label">多元/無法告知</span><span class="bar-count">~3%</span></div>
+          <div class="bar-track"><div class="bar-fill" style="width:5%; background:var(--divider)"></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">核心受眾結論</div>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-top:4px;">
+        <div style="display:flex;gap:10px;align-items:flex-start;">
+          <span style="font-size:18px;flex-shrink:0">👩‍💼</span>
+          <div>
+            <div style="font-weight:700;font-size:13px;">主力族群：35–50歲職業女性</div>
+            <div style="font-size:12px;color:var(--muted);">有一定投資概念但沒系統，沒時間盯盤，渴望學到可立即應用的方法。</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;align-items:flex-start;">
+          <span style="font-size:18px;flex-shrink:0">📈</span>
+          <div>
+            <div style="font-weight:700;font-size:13px;">入門到中階混合市場</div>
+            <div style="font-size:12px;color:var(--muted);">44% 已有個股買賣但缺乏方法，24% 是純 ETF 族，11% 是全新手，課程必須顧及多層次。</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;align-items:flex-start;">
+          <span style="font-size:18px;flex-shrink:0">🎓</span>
+          <div>
+            <div style="font-weight:700;font-size:13px;">「有學但不會用」是重要族群</div>
+            <div style="font-size:12px;color:var(--muted);">14% 曾學過技術分析但無法應用，代表課程需強調「從學到用」的落地銜接。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SECTION 3: PAIN POINTS ===== -->
+<section class="section">
+  <div class="section-title">
+    <span class="num-badge">03</span>
+    核心痛點分析
+  </div>
+  <p class="section-desc">問卷第2題：你在股市投資時最常遇到哪些困擾？（複選）</p>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">痛點排行（提及率）</div>
+      <table class="ranked-table">
+        <thead>
+          <tr>
+            <th style="width:40px">#</th>
+            <th>痛點描述</th>
+            <th>佔比</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="rank-num">1</td>
+            <td>不知道什麼時候該買／該賣</td>
+            <td><span class="pct-badge">73%</span></td>
+          </tr>
+          <tr>
+            <td class="rank-num">2</td>
+            <td>不知道該買哪一檔股票</td>
+            <td><span class="pct-badge">62%</span></td>
+          </tr>
+          <tr>
+            <td class="rank-num">3</td>
+            <td>沒時間盯盤</td>
+            <td><span class="pct-badge">60%</span></td>
+          </tr>
+          <tr>
+            <td class="rank-num">4</td>
+            <td>投資常常賠多賺少</td>
+            <td><span class="pct-badge">48%</span></td>
+          </tr>
+          <tr>
+            <td class="rank-num">5</td>
+            <td>常常一買就跌、一賣就漲</td>
+            <td><span class="pct-badge">47%</span></td>
+          </tr>
+          <tr>
+            <td class="rank-num">6</td>
+            <td>看了很多資訊，但還是不敢下單</td>
+            <td><span class="pct-badge">34%</span></td>
+          </tr>
+          <tr>
+            <td class="rank-num">7</td>
+            <td>買 ETF，漲跌沒感覺、沒成就感</td>
+            <td><span class="pct-badge">12%</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card">
+      <div class="card-title">痛點群組分析</div>
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <div>
+          <div style="font-weight:700;font-size:13px;color:var(--ink);margin-bottom:6px;">📍 決策困難類（最大痛）</div>
+          <div style="font-size:13px;color:var(--muted);">「不知道何時買賣」 + 「不知道買哪檔」合計覆蓋超過七成受訪者，是核心需求。課程進出場與選股篇是必須深度著墨的模組。</div>
+        </div>
+        <hr>
+        <div>
+          <div style="font-weight:700;font-size:13px;color:var(--ink);margin-bottom:6px;">⏱ 時間成本類（生活痛點）</div>
+          <div style="font-size:13px;color:var(--muted);">「沒時間盯盤」佔六成，強烈對應課程主打賣點「不用盯盤、五步驟照著做」，定位方向正確。</div>
+        </div>
+        <hr>
+        <div>
+          <div style="font-weight:700;font-size:13px;color:var(--ink);margin-bottom:6px;">💸 結果挫敗類</div>
+          <div style="font-size:13px;color:var(--muted);">「賠多賺少」＋「一買就跌」合計近半，情緒共鳴強，適合在課程說明頁用損失心理強化購買動機。</div>
+        </div>
+        <hr>
+        <div>
+          <div style="font-weight:700;font-size:13px;color:var(--ink);margin-bottom:6px;">😰 心理障礙類</div>
+          <div style="font-size:13px;color:var(--muted);">「看很多資訊但不敢下單」佔三成以上，說明課程需提供「紀律/流程」支撐，降低決策焦慮。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SECTION 4: TOPIC INTEREST ===== -->
+<section class="section">
+  <div class="section-title">
+    <span class="num-badge">04</span>
+    課程主題興趣度
+  </div>
+  <p class="section-desc">問卷第3題：以下主題，你對哪幾個最有興趣？（複選，依提及率排序）</p>
+
+  <div class="card">
+    <div class="bar-list">
+      <div class="bar-item">
+        <div class="bar-label-row">
+          <span class="bar-label">【選股篇】如何挑到有機會上漲的股票？</span>
+          <span class="bar-count"><span class="badge badge-green">最高 ~68%</span></span>
+        </div>
+        <div class="bar-track"><div class="bar-fill green" style="width:100%"></div></div>
+      </div>
+      <div class="bar-item">
+        <div class="bar-label-row">
+          <span class="bar-label">【進出場篇】如何判斷什麼時候該買進／賣出？</span>
+          <span class="bar-count"><span class="badge badge-green">次高 ~65%</span></span>
+        </div>
+        <div class="bar-track"><div class="bar-fill green" style="width:96%"></div></div>
+      </div>
+      <div class="bar-item">
+        <div class="bar-label-row">
+          <span class="bar-label">【趨勢篇】如何判斷股市是會上漲還是下跌？</span>
+          <span class="bar-count">~40%</span>
+        </div>
+        <div class="bar-track"><div class="bar-fill" style="width:59%"></div></div>
+      </div>
+      <div class="bar-item">
+        <div class="bar-label-row">
+          <span class="bar-label">【看盤篇】如何用口訣看懂圖，自己掌握行情？</span>
+          <span class="bar-count">~38%</span>
+        </div>
+        <div class="bar-track"><div class="bar-fill" style="width:56%"></div></div>
+      </div>
+      <div class="bar-item">
+        <div class="bar-label-row">
+          <span class="bar-label">【停損與停利篇】如何避免大賠，或把賺到的錢留住？</span>
+          <span class="bar-count">~32%</span>
+        </div>
+        <div class="bar-track"><div class="bar-fill blue" style="width:47%"></div></div>
+      </div>
+      <div class="bar-item">
+        <div class="bar-label-row">
+          <span class="bar-label">【流程篇】如何有紀律的投資，不受情緒干擾？</span>
+          <span class="bar-count">~28%</span>
+        </div>
+        <div class="bar-track"><div class="bar-fill blue" style="width:41%"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:20px;" class="insight-grid">
+    <div class="insight-card action">
+      <div class="insight-icon">🎯</div>
+      <div class="insight-title">選股 + 進出場是黃金雙核心</div>
+      <div class="insight-body">兩大主題合計覆蓋超過六成半學員，課程應確保這兩個模組有足夠的比重與深度，是影響報名決策的關鍵。</div>
+    </div>
+    <div class="insight-card">
+      <div class="insight-icon">📊</div>
+      <div class="insight-title">趨勢判斷緊隨其後</div>
+      <div class="insight-body">趨勢篇作為選股與進出場的背景知識，有四成學員感興趣，應在課程結構中作為前置鋪墊，強化邏輯連貫性。</div>
+    </div>
+    <div class="insight-card warning">
+      <div class="insight-icon">🧠</div>
+      <div class="insight-title">流程與紀律需重新包裝</div>
+      <div class="insight-body">「流程篇」雖然最低，但從痛點分析來看「不敢下單」是高頻困擾，建議以「決策 SOP」或「散戶心理剋星」等更具情緒共鳴的角度重新命名。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SECTION 5: COURSE FEATURES ===== -->
+<section class="section">
+  <div class="section-title">
+    <span class="num-badge">05</span>
+    課程特色吸引力排行
+  </div>
+  <p class="section-desc">問卷第4題：以下是這堂課的課程特色，請選出「最」吸引你的項目</p>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">最吸引人特色排行（單選最高票）</div>
+      <div class="bar-list">
+        <div class="bar-item">
+          <div class="bar-label-row">
+            <span class="bar-label">不用財報、不用盯盤，五步驟流程照著做就能上手</span>
+            <span class="bar-count"><span class="badge badge-green">第一 ~32%</span></span>
+          </div>
+          <div class="bar-track"><div class="bar-fill green" style="width:100%"></div></div>
+        </div>
+        <div class="bar-item">
+          <div class="bar-label-row">
+            <span class="bar-label">一次打包技術分析核心，少賠一次就能值回票價</span>
+            <span class="bar-count">第二 ~24%</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill" style="width:75%"></div></div>
+        </div>
+        <div class="bar-item">
+          <div class="bar-label-row">
+            <span class="bar-label">有圖解案例解析，學完就能立刻應用</span>
+            <span class="bar-count">第三 ~21%</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill blue" style="width:66%"></div></div>
+        </div>
+        <div class="bar-item">
+          <div class="bar-label-row">
+            <span class="bar-label">課程可以無限次數、永久觀看</span>
+            <span class="bar-count">第四 ~12%</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill" style="width:38%"></div></div>
+        </div>
+        <div class="bar-item">
+          <div class="bar-label-row">
+            <span class="bar-label">白話口訣教學，一句話就能判斷行情</span>
+            <span class="bar-count">第五 ~8%</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill" style="width:25%"></div></div>
+        </div>
+        <div class="bar-item">
+          <div class="bar-label-row">
+            <span class="bar-label">老師有 40 年股市實戰經驗，最懂散戶的痛點</span>
+            <span class="bar-count">第六 ~3%</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill" style="width:9%; background:var(--divider)"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">特色分析洞察</div>
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div style="background:var(--accent-light);border-radius:4px;padding:14px 16px;">
+          <div style="font-weight:700;font-size:13px;color:var(--accent-dark);margin-bottom:4px;">🏆 勝出關鍵：「輕鬆上手感」</div>
+          <div style="font-size:12.5px;color:var(--muted);">「不用財報、五步驟照著做」勝出，說明受眾最需要「降低門檻、給我方法」，而非強調師資或內容深度。</div>
+        </div>
+        <div style="background:#e8f4fd;border-radius:4px;padding:14px 16px;">
+          <div style="font-weight:700;font-size:13px;color:#1d4d7e;margin-bottom:4px;">💡 「值回票價」是強力心理框架</div>
+          <div style="font-size:12.5px;color:var(--muted);">第二名「少賠一次就能值回票價」訴諸損失規避心理，對已有賠損經驗的學員（48% 有賠損困擾）特別有效。</div>
+        </div>
+        <div style="border:1px solid var(--divider);border-radius:4px;padding:14px 16px;">
+          <div style="font-weight:700;font-size:13px;color:var(--ink);margin-bottom:4px;">⚠️ 老師資歷不是主要決策因素</div>
+          <div style="font-size:12.5px;color:var(--muted);">「40年實戰經驗」得票最低，建議將師資背書作為信任輔助，而非主要銷售賣點，改以學員成果見證強化。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SECTION 6: PRICE ===== -->
+<section class="section">
+  <div class="section-title">
+    <span class="num-badge">06</span>
+    價格敏感度與定價建議
+  </div>
+  <p class="section-desc">問卷第9–12題：太貴了／有點貴但考慮／太划算了／太便宜了（各自填寫心中的臨界價格）</p>
+
+  <div class="grid-4">
+    <div class="metric-card">
+      <div class="metric-val" style="color:var(--red);font-size:28px">$30,000</div>
+      <div class="metric-label">「太貴了」上限（極端值）</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val" style="font-size:28px">$5,000–6,000</div>
+      <div class="metric-label">「有點貴但考慮」中位</div>
+    </div>
+    <div class="metric-card highlight">
+      <div class="metric-val">$3,000–3,500</div>
+      <div class="metric-label">市場心理甜蜜點（最多票）</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-val" style="color:var(--green);font-size:28px">$3,000</div>
+      <div class="metric-label">「太便宜」心理底線</div>
+    </div>
+  </div>
+
+  <div style="margin-top:24px;" class="card">
+    <div class="card-title">價格敏感帶分析</div>
+    <div class="price-range-visual">
+      <div class="price-marker">
+        <div class="price-pin" style="left:10%">
+          <div class="price-pin-label">$3,000</div>
+          <div class="price-pin-dot floor"></div>
+        </div>
+        <div class="price-pin" style="left:40%">
+          <div class="price-pin-label">$3,500–4,500</div>
+          <div class="price-pin-dot sweet"></div>
+        </div>
+        <div class="price-pin" style="left:68%">
+          <div class="price-pin-label">$6,000–8,000</div>
+          <div class="price-pin-dot" style="background:var(--blue)"></div>
+        </div>
+        <div class="price-pin" style="left:90%">
+          <div class="price-pin-label">$10,000+</div>
+          <div class="price-pin-dot ceiling"></div>
+        </div>
+      </div>
+      <div class="price-axis">
+        <span>$3,000（底線）</span>
+        <span>← 甜蜜定價帶 →</span>
+        <span>$10,000（抗拒點）</span>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:24px;" class="grid-3">
+      <div style="text-align:center;padding:16px;background:var(--paper);border-radius:4px;border:1px solid var(--divider);">
+        <div style="font-size:22px;font-weight:700;color:var(--green);font-family:'Noto Serif TC',serif;">$3,000</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:4px;">絕大多數人的心理底線<br>低於此價恐傷品質感知</div>
+      </div>
+      <div style="text-align:center;padding:16px;background:var(--accent-light);border-radius:4px;border:2px solid var(--accent);">
+        <div style="font-size:22px;font-weight:700;color:var(--accent-dark);font-family:'Noto Serif TC',serif;">$3,500–4,500</div>
+        <div style="font-size:12px;color:var(--accent-dark);margin-top:4px;">建議定價帶<br>轉換率最佳化區間</div>
+      </div>
+      <div style="text-align:center;padding:16px;background:var(--paper);border-radius:4px;border:1px solid var(--divider);">
+        <div style="font-size:22px;font-weight:700;color:var(--red);font-family:'Noto Serif TC',serif;">$6,000+</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:4px;">進入「有點貴」感知<br>需強化價值感與保證機制</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:16px;" class="insight-card warning">
+    <div class="insight-icon">💰</div>
+    <div class="insight-title">定價策略建議：早鳥 $3,490 → 正式 $4,490</div>
+    <div class="insight-body">多數人的心理甜蜜點在 $3,000–3,500，建議早鳥方案設定 $3,490，既高於「太便宜」的品質疑慮線（$3,000），又不超過大多數人的「有點貴」門檻，配合明確截止日期製造稀缺感。正式售價 $4,490 可做定錨，強化早鳥折扣吸引力。</div>
+  </div>
+</section>
+
+<!-- ===== SECTION 7: PURCHASE-DECIDING FACTORS ===== -->
+<section class="section">
+  <div class="section-title">
+    <span class="num-badge">07</span>
+    促進購買的加值服務
+  </div>
+  <p class="section-desc">問卷第8題：以下哪些課程安排，會讓你更想購買這堂課程？（複選）</p>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">最受歡迎加值服務排行</div>
+      <div class="bar-list">
+        <div class="bar-item">
+          <div class="bar-label-row">
+            <span class="bar-label">輔助選股 APP</span>
+            <span class="bar-count"><span class="badge badge-green">第一 ~38%</span></span>
+          </div>
+          <div class="bar-track"><div class="bar-fill green" style="width:100%"></div></div>
+        </div>
+        <div class="bar-item">
+          <div class="bar-label-row">
+            <span class="bar-label">定期趨勢分析</span>
+            <span class="bar-count">第二 ~35%</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill" style="width:92%"></div></div>
+        </div>
+        <div class="bar-item">
+          <div class="bar-label-row">
+            <span class="bar-label">直播 Q&amp;A</span>
+            <span class="bar-count">第三 ~28%</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill blue" style="width:74%"></div></div>
+        </div>
+        <div class="bar-item">
+          <div class="bar-label-row">
+            <span class="bar-label">LINE 學員專屬社群</span>
+            <span class="bar-count">第四 ~26%</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill blue" style="width:68%"></div></div>
+        </div>
+        <div class="bar-item">
+          <div class="bar-label-row">
+            <span class="bar-label">全彩講義</span>
+            <span class="bar-count">第五 ~18%</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill" style="width:47%"></div></div>
+        </div>
+        <div class="bar-item">
+          <div class="bar-label-row">
+            <span class="bar-label">FB 學員專屬交流社團</span>
+            <span class="bar-count">第六 ~6%</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill" style="width:16%; background:var(--divider)"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">問卷第7題：哪些資訊最有助做購買決定？</div>
+      <div class="bar-list">
+        <div class="bar-item">
+          <div class="bar-label-row">
+            <span class="bar-label">學員見證或成果案例</span>
+            <span class="bar-count"><span class="badge badge-amber">最需要</span></span>
+          </div>
+          <div class="bar-track"><div class="bar-fill" style="width:100%"></div></div>
+        </div>
+        <div class="bar-item">
+          <div class="bar-label-row">
+            <span class="bar-label">完整課程大綱</span>
+            <span class="bar-count">次需要</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill" style="width:82%"></div></div>
+        </div>
+        <div class="bar-item">
+          <div class="bar-label-row">
+            <span class="bar-label">上課方式與流程</span>
+            <span class="bar-count">第三</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill blue" style="width:60%"></div></div>
+        </div>
+        <div class="bar-item">
+          <div class="bar-label-row">
+            <span class="bar-label">課程價格（含早鳥說明）</span>
+            <span class="bar-count">第四</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill blue" style="width:50%"></div></div>
+        </div>
+        <div class="bar-item">
+          <div class="bar-label-row">
+            <span class="bar-label">試看課程內容</span>
+            <span class="bar-count">少數</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill" style="width:28%; background:var(--divider)"></div></div>
+        </div>
+      </div>
+      <div style="margin-top:16px;padding:12px;background:var(--paper);border-radius:4px;font-size:12.5px;color:var(--muted);">
+        ⚡ 銷售頁必備：<strong>真實學員見證</strong>是決策關鍵，課程說明頁中應置於最顯眼位置並配合具體數字（如：持股從虧轉盈、學後 3 個月報酬率等）。
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SECTION 8: STUDENT WISHES ===== -->
+<section class="section">
+  <div class="section-title">
+    <span class="num-badge">08</span>
+    學員對課程的心聲與許願
+  </div>
+  <p class="section-desc">問卷第13題：針對課程內容，有什麼想跟朱家泓老師許願的嗎？（精選有價值的回應）</p>
+
+  <div class="quote-grid">
+    <div class="quote-card">
+      <p>希望課程不要只是自己賺錢的，而是學員看了真的會有幫助的</p>
+      <div class="quote-attr">Doris，31–35 歲，女性</div>
+    </div>
+    <div class="quote-card">
+      <p>有follow朱老師飆股YouTube，但因為沒常看股票很難看懂，希望課程可以有完整台階可以學到應用上</p>
+      <div class="quote-attr">Kay，31–35 歲，女性</div>
+    </div>
+    <div class="quote-card">
+      <p>希望內容簡單易學；傳授連碰都沒碰過的新手，快速入門</p>
+      <div class="quote-attr">Jenny & 哲銘</div>
+    </div>
+    <div class="quote-card">
+      <p>不藏私的技術分析心法；希望老師多開幾個課程，我是新手</p>
+      <div class="quote-attr">Lorin & 阿紝</div>
+    </div>
+    <div class="quote-card">
+      <p>除了技術面操作也可以增加如何看基本面財報的操作技巧</p>
+      <div class="quote-attr">楊先生，31–35 歲，男性</div>
+    </div>
+    <div class="quote-card">
+      <p>希望課程還有更多剛學會的散戶想要入門技術分析，老師要講小白聽得懂的語言</p>
+      <div class="quote-attr">小菁，36–40 歲，女性</div>
+    </div>
+    <div class="quote-card">
+      <p>預到股災怎麼辦，股票剛買就遇到震盪呢</p>
+      <div class="quote-attr">LIN，31–35 歲，女性</div>
+    </div>
+    <div class="quote-card">
+      <p>希望能媲美中正大學的投資學班；能有朱老師一半功力就很開心了</p>
+      <div class="quote-attr">黃媽媽 & 彭's</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SECTION 9: RECOMMENDATIONS ===== -->
+<section class="section">
+  <div class="section-title">
+    <span class="num-badge">09</span>
+    課程規劃優化建議
+  </div>
+  <p class="section-desc">基於問卷數據分析提出的具體行動方向</p>
+
+  <div class="summary-box">
+    <h3>核心結論</h3>
+    <p>本課程已具備高度市場吸引力，問卷顯示 75% 學員有強烈或明確購買意願，平均分數達 4.1 分。目標受眾主要為 35–50 歲有投資基礎但缺乏系統化方法的上班族，其最大痛點是「不知道何時買賣選股」與「沒時間盯盤」，完全與課程主打賣點吻合。以下優化建議旨在將「猶豫族群」轉化為實際購買。</p>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:16px;">
+    <div class="rec-card">
+      <div class="rec-num">01</div>
+      <div class="rec-content">
+        <div class="rec-tag">課程結構</div>
+        <div class="rec-title">以「選股 × 進出場」作為課程黃金雙核心</div>
+        <div class="rec-body">兩大主題各覆蓋六至七成學員，是購課動機的主要驅動力。建議將這兩個模組放在課程前三分之一，製造早期成就感，並確保每個單元有可執行的「行動步驟」，滿足學員對「學完立刻能用」的強烈期望。</div>
+      </div>
+    </div>
+    <div class="rec-card">
+      <div class="rec-num">02</div>
+      <div class="rec-content">
+        <div class="rec-tag">銷售文案</div>
+        <div class="rec-title">銷售頁前置「損失規避」敘事，再導入賣點</div>
+        <div class="rec-body">受眾痛點集中在「買錯」「賠多賺少」，建議開篇用「你有沒有這些情況…」喚起情緒認同，再切入課程解方。主視覺文案可強化「少賠一次就值回票價」框架，這是問卷中第二受歡迎的課程特色，損失規避心理效果強烈。</div>
+      </div>
+    </div>
+    <div class="rec-card">
+      <div class="rec-num">03</div>
+      <div class="rec-content">
+        <div class="rec-tag">定價策略</div>
+        <div class="rec-title">早鳥 $3,490 → 正式 $4,490 的梯度定價</div>
+        <div class="rec-body">問卷顯示 $3,000–3,500 是學員心理甜蜜點，早鳥 $3,490 精準落在此帶，既高於「太便宜」底線保護品質感知，又低於大多數人的「有點貴」門檻。搭配 7–10 天早鳥期限製造稀缺，正式價 $4,490 作為定錨，強調價差。</div>
+      </div>
+    </div>
+    <div class="rec-card">
+      <div class="rec-num">04</div>
+      <div class="rec-content">
+        <div class="rec-tag">轉換優化</div>
+        <div class="rec-title">在銷售頁置入學員見證與成果數據</div>
+        <div class="rec-body">「學員見證或成果案例」是猶豫族群最需要的決策資訊。建議蒐集 5–10 位真實學員的具體成果（如持股從虧轉盈的百分比、學後第一次成功操作截圖），配合「上課方式與流程」說明，能大幅降低「不了解上課形式」的顧慮（佔猶豫原因第二名）。</div>
+      </div>
+    </div>
+    <div class="rec-card">
+      <div class="rec-num">05</div>
+      <div class="rec-content">
+        <div class="rec-tag">加值設計</div>
+        <div class="rec-title">以「輔助選股 APP」＋「定期趨勢分析」作為主要加值誘因</div>
+        <div class="rec-body">兩者是問卷加值服務前兩名，直接對應受眾痛點「不知道買哪檔」與「不知道大盤方向」。建議明確說明 APP 功能（如篩選條件、提醒機制），以及趨勢分析的頻率與形式（每月直播？圖文報告？），讓加值內容具體化，增強感知價值。</div>
+      </div>
+    </div>
+    <div class="rec-card">
+      <div class="rec-num">06</div>
+      <div class="rec-content">
+        <div class="rec-tag">受眾分層</div>
+        <div class="rec-title">製作「純新手」銜接內容，打消入門門檻</div>
+        <div class="rec-body">約 11% 的問卷填答者完全沒買過股票，多位學員直接許願「傳授新手快速入門」「請用小白聽得懂的語言」。建議在課程開頭加入 15–20 分鐘的「股市基礎快速導入」，不延長主課程但讓新手有安全感，也可作為行銷素材吸引更廣受眾。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div><!-- /container -->
+
+<footer class="report-footer">
+  <div>本報告由 <strong>ShiFu AI 分析系統</strong> 自動生成，資料來源為課前問卷全量填答（n=303）</div>
+  <div>生成日期：2026/03/06　|　朱家泓技術分析課程</div>
+</footer>
+
+</body>
+</html>
